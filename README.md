@@ -99,22 +99,6 @@ contact-manager/
 │   ├── routes/
 ```
 
-## 🔧 Configuration
-
-### Available Scripts
-
-**Frontend:**
-```bash
-npm run dev         # Start development server
-npm run build      # Build for production
-```
-
-**Backend:**
-```bash
-npm run dev        # Start development server
-npm start          # Start production server
-```
-
 ## 📱 API Documentation
 
 ### Authentication Endpoints
@@ -133,35 +117,30 @@ PUT    /api/contacts/:id     # Update contact
 DELETE /api/contacts/:id     # Delete contact
 ```
 
-## 🤝 Contributing
+## 📸 Screenshots
 
-We welcome contributions! Please follow these steps:
+### Home Page
+The home view of the app.
 
-1. Fork the repository
-2. Create your feature branch: `git checkout -b feature/amazing-feature`
-3. Commit your changes: `git commit -m 'Add amazing feature'`
-4. Push to the branch: `git push origin feature/amazing-feature`
-5. Open a pull request
+![Contact Manager](/docs/screenshots/home.png)
 
-### Development Guidelines
+### Add Contact Modal
+Modal for add contact.
 
-- Follow the established code style
-- Write meaningful commit messages
-- Add tests for new features
-- Update documentation as needed
+![Contact Manager](/docs/screenshots/add-contact.png)
 
-## 📄 License
+### Edit Contact Modal
+Modal for edit contact.
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+![Contact Manager](/docs/screenshots/edit-contact.png)
 
-## 🙏 Acknowledgments
+### Login Page
 
-- [React Documentation](https://reactjs.org/)
-- [MongoDB Documentation](https://docs.mongodb.com/)
-- [Express.js Guide](https://expressjs.com/)
-- [Node.js Documentation](https://nodejs.org/)
+![Contact Manager](/docs/screenshots/login.png)
 
----
+### Register Page
+
+![Contact Manager](/docs/screenshots/register.png)
 
 **[View Demo](https://your-demo-link.com)** | **[Report Bug](https://github.com/lahiruanushka/mern-contact-manager/issues)** | **[Request Feature](https://github.com/lahiruanushka/mern-contact-manager/issues)**
 
