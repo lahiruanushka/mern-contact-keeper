@@ -29,10 +29,11 @@ const LoginPage = () => {
     try {
       const response = await loginService(userData);
 
-      if (response.ok) {
+      if (response) {
         navigate("/");
+        login(response);
       } else {
-        setError(data.message || "Login failed");
+        setError(response.message || "Login failed");
       }
     } catch (err) {
       setError("Network error. Please try again.");

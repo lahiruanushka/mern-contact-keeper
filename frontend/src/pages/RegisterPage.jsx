@@ -10,6 +10,7 @@ import {
   LuUserPlus
 } from "react-icons/lu";
 import { AuthContext } from "../context/AuthContext";
+import { register } from "../services/apiService";
 
 const RegisterPage = () => {
   const [username, setUsername] = useState("");
@@ -27,19 +28,14 @@ const RegisterPage = () => {
     setIsLoading(true);
 
     try {
-      const response = await fetch("/api/auth/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, email, password }),
-      });
+      const data = await { username, email, password };
 
-      const data = await response.json();
+      const response = await register(data);
 
-      if (response.ok) {
-        login(data);
-        navigate("/dashboard");
+      if (response) {
+        navigate("/login");
       } else {
-        setError(data.message || "Registration failed");
+        setError(response.message || "Registration failed");
       }
     } catch (err) {
       setError("Network error. Please try again.");
