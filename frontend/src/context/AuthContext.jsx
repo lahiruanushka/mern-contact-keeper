@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { authMe } from "../services/apiService";
 
 // Authentication Context for global state management
 export const AuthContext = React.createContext();
@@ -14,17 +15,11 @@ export const AuthProvider = ({ children }) => {
       const token = localStorage.getItem("token");
       if (token) {
         try {
-          const response = await fetch("/api/auth/me", {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
-
-          if (response.ok) {
-            const userData = await response.json();
-            setUser(userData);
+          const response = await authMe(token);
+          console.log(response);
+          if (response) {
             setIsAuthenticated(true);
+            setUser(response);
           } else {
             localStorage.removeItem("token");
             setIsAuthenticated(false);
@@ -36,7 +31,6 @@ export const AuthProvider = ({ children }) => {
       }
       setIsLoading(false);
     };
-
     checkAuth();
   }, []);
 

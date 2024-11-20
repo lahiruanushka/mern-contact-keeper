@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { FaEdit, FaTrash } from "react-icons/fa";
 
-const ContactCard = ({ contact, onDelete }) => {
+const ContactCard = ({ contact, onDelete, onEdit }) => {
 
   return (
     <div className="bg-white p-6 rounded-lg shadow-lg transition-transform transform hover:scale-105">
@@ -13,29 +13,22 @@ const ContactCard = ({ contact, onDelete }) => {
           alt="avatar"
         />
         <div className="flex-grow">
-          <Link
-            to={{
-              pathname: `/contacts/${contact._id}`,
-              state: { contact },
-            }}
-          >
             <div className="text-xl font-semibold text-gray-800">
               {contact.name}
             </div>
             <div className="text-gray-600">{contact.email}</div>
             <div className="text-gray-600">{contact.phone}</div>
-          </Link>
         </div>
         <div className="flex space-x-2">
-          <Link
-            to={`/contacts/edit/${contact._id}`}
+          <button
+            onClick={() => onEdit()}
             className="text-blue-500 hover:text-blue-700"
             aria-label="Edit Contact"
           >
             <FaEdit size={20} />
-          </Link>
+          </button>
           <button
-            onClick={() => onDelete(contact._id)}
+            onClick={() => onDelete()}
             className="text-red-500 hover:text-red-700 "
             aria-label="Edit Contact"
           >

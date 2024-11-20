@@ -8,13 +8,16 @@ const {
 } = require("../controllers/authController");
 const validateToken = require("../middleware/validateTokenHandler");
 
-// Route to register a new user
+// @route POST /api/auth/register
+// @access public
 router.post("/register", registerUser);
 
-// Route to login a user
+// @route POST /api/auth/login
+// @access public
 router.post("/login", loginUser);
 
-// Route to get the current user's details, protected by the validateToken middleware
-router.get("/me", currentUser);
+// @route GET /api/auth/me
+// @access private
+router.get("/me", validateToken, currentUser);
 
 module.exports = router;
