@@ -141,8 +141,3 @@ Modal for edit contact.
 ### Register Page
 
 ![Contact Manager](/docs/screenshots/register.png)
-
-**[View Demo](https://your-demo-link.com)** | **[Report Bug](https://github.com/lahiruanushka/mern-contact-manager/issues)** | **[Request Feature](https://github.com/lahiruanushka/mern-contact-manager/issues)**
-
-Made with ❤️ by [Lahiru Anushka](https://github.com/lahiruanushka)
-
