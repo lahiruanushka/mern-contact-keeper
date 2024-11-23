@@ -19,30 +19,24 @@ const RegisterPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+
   const navigate = useNavigate();
-  const { login } = useContext(AuthContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
     setIsLoading(true);
 
-    try {
-      const data = await { username, email, password };
-
-      const response = await register(data);
-
-      if (response) {
-        navigate("/login");
-      } else {
-        setError(response.message || "Registration failed");
-      }
-    } catch (err) {
-      setError("Network error. Please try again.");
-    } finally {
-      setIsLoading(false);
+    const response = await register({ username, email, password });
+    
+    if (response.success) {
+      navigate("/login");
+    } else {
+      setError(response.message);
     }
-  };
+    
+    setIsLoading(false);
+};
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);

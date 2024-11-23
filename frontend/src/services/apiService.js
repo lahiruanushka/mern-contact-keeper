@@ -1,11 +1,22 @@
 import axios from "axios";
-
 const API_BASE_URL = import.meta.env.VITE_API_URL;
 
 const createHeaders = (token) => ({
   Authorization: token ? `Bearer ${token}` : undefined,
   "Content-Type": "application/json",
 });
+
+const handleApiError = (error) => {
+  if (error.response?.data) {
+    // Return the error response from our API
+    return error.response.data;
+  }
+  // For network errors or other issues
+  return {
+    success: false,
+    message: error.message || "An unexpected error occurred",
+  };
+};
 
 const login = async (userData) => {
   try {
@@ -14,7 +25,7 @@ const login = async (userData) => {
     });
     return response.data;
   } catch (error) {
-    throw new Error(error.response?.data?.message || "Login Error");
+    return handleApiError(error);
   }
 };
 
@@ -29,7 +40,7 @@ const register = async (userData) => {
     );
     return response.data;
   } catch (error) {
-    throw new Error(error.response?.data?.message || "Register Error");
+    return handleApiError(error);
   }
 };
 
@@ -40,9 +51,7 @@ const authMe = async (token) => {
     });
     return response.data;
   } catch (error) {
-    throw new Error(
-      error.response?.data?.message || "Failed to check authorization"
-    );
+    return handleApiError(error);
   }
 };
 
@@ -53,9 +62,7 @@ const getContacts = async (token) => {
     });
     return response.data;
   } catch (error) {
-    throw new Error(
-      error.response?.data?.message || "Failed to fetch contacts"
-    );
+    return handleApiError(error);
   }
 };
 
@@ -66,18 +73,22 @@ const getContact = async (id, token) => {
     });
     return response.data;
   } catch (error) {
-    throw new Error(error.response?.data?.message || "Error fetching contact");
+    return handleApiError(error);
   }
 };
 
 const addContact = async (contactData, token) => {
   try {
-    const response = await axios.post(`${API_BASE_URL}/contacts`, contactData, {
-      headers: createHeaders(token),
-    });
+    const response = await axios.post(
+      `${API_BASE_URL}/contacts`,
+      contactData,
+      {
+        headers: createHeaders(token),
+      }
+    );
     return response.data;
   } catch (error) {
-    throw new Error(error.response?.data?.message || "Error adding contact");
+    return handleApiError(error);
   }
 };
 
@@ -92,17 +103,21 @@ const updateContact = async (id, contactData, token) => {
     );
     return response.data;
   } catch (error) {
-    throw new Error(error.response?.data?.message || "Error updating contact");
+    return handleApiError(error);
   }
 };
 
 const deleteContact = async (id, token) => {
   try {
-    await axios.delete(`${API_BASE_URL}/contacts/${id}`, {
-      headers: createHeaders(token),
-    });
+    const response = await axios.delete(
+      `${API_BASE_URL}/contacts/${id}`,
+      {
+        headers: createHeaders(token),
+      }
+    );
+    return response.data;
   } catch (error) {
-    throw new Error(error.response?.data?.message || "Error deleting contact");
+    return handleApiError(error);
   }
 };
 

@@ -18,25 +18,28 @@ const LoginPage = () => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  const { login } = useContext(AuthContext);
+  const { login: loginContext } = useContext(AuthContext); 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
     setIsLoading(true);
 
-    const userData = { email, password };
     try {
+      const userData = { email, password };
       const response = await loginService(userData);
+      
 
-      if (response) {
+  if (response.success) {
+          loginContext(response.data); // Store user data in context
         navigate("/");
-        login(response);
-      } else {
-        setError(response.message || "Login failed");
-      }
+  } else {
+    // Handle error
+    setError(response.message);
+  }
+    
     } catch (err) {
-      setError("Network error. Please try again.");
+      setError(response.message);
     } finally {
       setIsLoading(false);
     }
@@ -62,9 +65,9 @@ const LoginPage = () => {
         </p>
 
         {error && (
-          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl mb-4 flex items-center">
-            <LuAlertTriangle className="w-5 h-5 mr-2 flex-shrink-0" />
-            <span>{error}</span>
+          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl mb-4 flex items-center gap-2">
+            <LuAlertTriangle className="w-5 h-5 flex-shrink-0" />
+            <span className="text-sm">{error}</span>
           </div>
         )}
 

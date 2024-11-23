@@ -35,9 +35,9 @@ const ContactsPage = () => {
   const fetchContacts = useCallback(async () => {
     setLoading(true);
     try {
-      const data = await getContacts(ACCESS_TOKEN);
-      setContacts(data);
-      setFilteredContacts(data);
+      const response = await getContacts(ACCESS_TOKEN);
+      setContacts(response.data);
+      setFilteredContacts(response.data);
       setFadeIn(true);
     } catch (error) {
       setError(error.message);

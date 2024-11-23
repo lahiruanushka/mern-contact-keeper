@@ -25,8 +25,8 @@ const EditContactModal = ({
       
       setLoading(true);
       try {
-        const contactData = await getContact(contactId, ACCESS_TOKEN);
-        setContact(contactData);
+        const response = await getContact(contactId, ACCESS_TOKEN);
+        setContact(response.data);
       } catch (error) {
         setError("Failed to load contact. Please try again.");
         console.log(error)
