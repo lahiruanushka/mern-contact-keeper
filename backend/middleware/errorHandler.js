@@ -1,48 +1,29 @@
-const { constants } = require("../constants");
+import CustomError from "../utils/CustomError.js";
 
 const errorHandler = (err, req, res, next) => {
-  const statusCode = res.statusCode ? res.statusCode : 500;
+  let error = { ...err };
+  error.message = err.message;
 
-  switch (statusCode) {
-    case constants.VALIDATION_ERROR:
-      res.json({
-        title: "Validation Failed",
-        message: err.message,
-        stackTrace: err.stack,
-      });
-      break;
-    case constants.NOT_FOUND:
-      res.json({
-        title: "Not Found",
-        message: err.message,
-        stackTrace: err.stack,
-      });
-      break;
-    case constants.UNAUTHORIZED:
-      res.json({
-        title: "Un authorizes",
-        message: err.message,
-        stackTrace: err.stack,
-      });
-      break;
-    case constants.FORBIDDEN:
-      res.json({
-        title: "Forbidden",
-        message: err.message,
-        stackTrace: err.stack,
-      });
-      break;
-    case constants.SERVER_ERROR:
-      res.json({
-        title: "Server error",
-        message: err.message,
-        stackTrace: err.stack,
-      });
-      break;
-    default:
-      console.log("No erros");
-      break;
+  // Log error for debugging
+  console.error('Error:', err);
+
+  // Mongoose duplicate key error
+  if (err.code === 11000) {
+    const message = 'Duplicate field value entered';
+    error = new CustomError(message, 400);
   }
+
+  // Mongoose validation error
+  if (err.name === 'ValidationError') {
+    const message = Object.values(err.errors).map(val => val.message);
+    error = new CustomError(message, 400);
+  }
+
+  res.status(error.statusCode || 500).json({
+    success: false,
+    message: error.message || 'Internal Server Error',
+    stack: process.env.NODE_ENV === 'development' ? err.stack : undefined
+  });
 };
 
-module.exports = errorHandler;
+export default errorHandler;

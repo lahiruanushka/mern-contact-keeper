@@ -1,23 +1,15 @@
-const express = require("express");
-
-const router = express.Router();
-const {
+import express from "express";
+import {
   registerUser,
   loginUser,
   currentUser,
-} = require("../controllers/authController");
-const validateToken = require("../middleware/validateTokenHandler");
+} from "../controllers/authController.js";
+import validateToken from "../middleware/validateToken.js";
 
-// @route POST /api/auth/register
-// @access public
+const router = express.Router();
+
 router.post("/register", registerUser);
-
-// @route POST /api/auth/login
-// @access public
 router.post("/login", loginUser);
-
-// @route GET /api/auth/me
-// @access private
 router.get("/me", validateToken, currentUser);
 
-module.exports = router;
+export default router;
